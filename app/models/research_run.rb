@@ -10,6 +10,7 @@ class ResearchRun < ApplicationRecord
   validates :status, inclusion: { in: STATUSES }
 
   scope :recent, -> { order(created_at: :desc).limit(20) }
+  scope :running, -> { where(status: %w[queued running]) }
 
   def running?
     status.in?(%w[queued running])
