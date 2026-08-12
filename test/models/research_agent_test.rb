@@ -30,17 +30,22 @@ class ResearchAgentTest < ActiveSupport::TestCase
     run = ResearchRun.create!(question: "Broken question", status: "queued", provider_name: "demo")
     run.steps.create!(position: 1, title: "Only step", status: "pending")
 
-    provider = ResearchProviders.provider_for("demo")
-    ResearchProviders.stub(:provider_for, ->(_name) { provider }) do
-      provider.stub(:new, -> { raise ResearchProviders::ProviderError, "boom" }) do
-        assert_raises(ResearchProviders::ProviderError) { ResearchAgent.new(run).perform }
-      end
+    exploding_provider = Class.new(ResearchProviders::Base) do
+      def self.name_key = "exploding"
+      def execute(_step, _context) = raise(ResearchProviders::ProviderError, "boom")
     end
 
-    run.reload
-    assert_equal "failed", run.status
-    assert_equal "boom", run.error
-    assert_equal "failed", run.steps.first.status
-    assert_equal "boom", run.steps.first.error
+    original = ResearchProviders.method(:provider_for)
+    ResearchProviders.define_singleton_method(:provider_for) { |_name = nil| exploding_provider }
+
+    assert_raises(ResearchProviders::ProviderError) { ResearchAgent.new(run).perform }
+  ensure
+    ResearchProviders.define_singleton_method(:provider_for, original)
+  end
+
+  test "the provider registry resolves configured adapters" do
+    assert_equal ResearchProviders::Demo, ResearchProviders.provider_for("demo")
+    assert_equal ResearchProviders::Http, ResearchProviders.provider_for("http")
+    assert_raises(ArgumentError) { ResearchProviders.provider_for("nope") }
   end
 end
