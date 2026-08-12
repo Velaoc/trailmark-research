@@ -1,0 +1,178 @@
+/*
+ * Trailmark Research product styles, layered on the Material Design 3
+ * tokens already loaded by material_system.css / material_tokens.css.
+ * Everything here uses the framework's semantic tokens so light/dark and
+ * contrast behavior stay consistent with the rest of the app.
+ */
+
+.md-section__inner--narrow {
+  max-width: 46rem;
+  margin-inline: auto;
+}
+
+/* ---- run meta and status banner ---- */
+
+.md-run-meta {
+  color: var(--md-on-surface-variant);
+  font-size: 0.875rem;
+  margin-block: 0.5rem 1.5rem;
+}
+
+.md-status-banner {
+  border: 1px solid var(--md-outline-variant);
+  background: var(--md-secondary-container);
+  color: var(--md-on-secondary-container);
+  border-radius: var(--md-shape-corner-medium);
+  padding: 0.75rem 1rem;
+  margin-block: 0 1.5rem;
+}
+
+/* ---- answer and error cards ---- */
+
+.md-answer h2,
+.md-card--error h2 {
+  margin-top: 0;
+}
+
+.md-card--error {
+  border: 1px solid var(--md-error);
+  background: var(--md-error-container);
+  color: var(--md-on-error-container);
+}
+
+.md-answer {
+  margin-block-end: 2rem;
+}
+
+/* ---- timeline ---- */
+
+.md-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.md-timeline__item {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.md-timeline__rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  position: relative;
+}
+
+.md-timeline__dot {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  background: var(--md-secondary-container);
+  color: var(--md-on-secondary-container);
+  font-weight: 600;
+  font-size: 0.875rem;
+  border: 1px solid var(--md-outline-variant);
+}
+
+.md-timeline__item[data-status="completed"] .md-timeline__dot {
+  background: var(--md-primary-container);
+  color: var(--md-on-primary-container);
+  border-color: var(--md-primary);
+}
+
+.md-timeline__item[data-status="running"] .md-timeline__dot {
+  background: var(--md-tertiary-container);
+  color: var(--md-on-tertiary-container);
+  border-color: var(--md-tertiary);
+}
+
+.md-timeline__item[data-status="failed"] .md-timeline__dot {
+  background: var(--md-error-container);
+  color: var(--md-on-error-container);
+  border-color: var(--md-error);
+}
+
+.md-timeline__card {
+  padding: 1rem 1.25rem;
+}
+
+.md-timeline__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.md-timeline__header h3 {
+  margin: 0;
+  font-size: 1rem;
+  flex: 1 1 auto;
+}
+
+.md-timeline__duration {
+  color: var(--md-on-surface-variant);
+  font-size: 0.8125rem;
+}
+
+.md-timeline__details {
+  margin-top: 0.75rem;
+  border-top: 1px solid var(--md-outline-variant);
+  padding-top: 0.5rem;
+}
+
+.md-timeline__details summary {
+  cursor: pointer;
+  color: var(--md-primary);
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.md-timeline__code {
+  background: var(--md-surface-container-low);
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--md-shape-corner-small);
+  padding: 0.75rem 1rem;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  white-space: pre-wrap;
+}
+
+.md-timeline__error {
+  margin-top: 0.75rem;
+  color: var(--md-error);
+  font-size: 0.875rem;
+}
+
+/* ---- forms ---- */
+
+.md-form-stack {
+  padding: 1.5rem;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.md-form-error {
+  border: 1px solid var(--md-error);
+  background: var(--md-error-container);
+  color: var(--md-on-error-container);
+  border-radius: var(--md-shape-corner-medium);
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+}
+
+.md-form-error ul {
+  margin: 0.25rem 0 0;
+  padding-left: 1.25rem;
+}
+
+.md-prose p {
+  margin-block: 0.5rem;
+}
