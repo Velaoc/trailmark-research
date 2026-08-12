@@ -8,4 +8,12 @@ class ResearchStep < ApplicationRecord
   validates :title, presence: true
   validates :position, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :status, inclusion: { in: STATUSES }
+
+  def running?
+    status == "running"
+  end
+
+  def completed?
+    status == "completed"
+  end
 end
