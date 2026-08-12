@@ -82,7 +82,7 @@ module ResearchProviders
     end
 
     def user_prompt(step, context)
-      parts = ["STEP #{step.position}: #{step.title}"]
+      parts = [ "STEP #{step.position}: #{step.title}" ]
       parts << "\nASSIGNMENT:\n#{step.input}" if step.input.present?
       if context.any?
         parts << "\nEARLIER FINDINGS:"
