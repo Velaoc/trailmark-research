@@ -130,6 +130,9 @@ Rails.application.routes.draw do
     get "session", to: "sessions#show", as: :session
   end
 
+  # Trailmark Research: guest-first research runs.
+  resources :research_runs, only: %i[new create show]
+
   # Minimal landing page until the M7 marketing set replaces it.
-    root "foundation/home#show"
+  root "research_runs#new"
 end
