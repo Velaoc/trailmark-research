@@ -59,7 +59,11 @@ class AdminAccessTest < ActionDispatch::IntegrationTest
       "/admin/invitations/#{invitation.id}",
       "/admin/sessions",
       "/admin/sessions/#{session_row.id}",
-      "/admin/login-activity"
+      "/admin/login-activity",
+      "/admin/research_runs",
+      "/admin/research_runs/#{run.id}",
+      "/admin/research_steps",
+      "/admin/research_steps/#{run.steps.first.id}"
     ].each do |path|
       get path
       assert_response :success, path
@@ -130,6 +134,8 @@ class AdminAccessTest < ActionDispatch::IntegrationTest
       /admin/invitations
       /admin/sessions
       /admin/login-activity
+      /admin/research_runs
+      /admin/research_steps
       /admin/jobs
     ]
   end
