@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
-# The registry module lives under app/services and is not autoloaded yet when
-# this initializer runs, so require it explicitly before registering adapters.
+# The registry and adapter modules live under app/services and are not
+# autoloaded yet when this initializer runs, so require them explicitly
+# before registering.
 require_dependency "research_providers"
+require_dependency "research_providers/demo"
+require_dependency "research_providers/http"
 
 # Registry for research provider adapters. RESEARCH_PROVIDER_NAME selects the
 # active one; it defaults to the demo adapter in previews so the app is fully
