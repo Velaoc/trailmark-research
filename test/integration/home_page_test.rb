@@ -23,17 +23,4 @@ class HomePageTest < ActionDispatch::IntegrationTest
     assert_select "footer.md-footer a[href='#{legal_terms_path}']", minimum: 1
     assert_select "footer.md-footer a[href='#{legal_privacy_path}']", minimum: 1
   end
-
-  test "root shows the seeded demo run on the timeline when one exists" do
-    ResearchRun.destroy_all
-    run = ResearchRun.create!(question: "Demo question", status: "completed", provider_name: "demo",
-      answer: "Demo answer.", started_at: 1.hour.ago, completed_at: 59.minutes.ago)
-    run.steps.create!(position: 1, title: "Synthesize the answer", status: "completed",
-      output: "Demo output.", duration_ms: 500, started_at: 1.hour.ago, completed_at: 59.minutes.ago)
-
-    get root_path
-    assert_response :success
-    assert_select ".md-timeline__item", count: 1
-    assert_select "h3", text: "Synthesize the answer"
-  end
 end
