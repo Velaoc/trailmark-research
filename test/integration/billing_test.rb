@@ -100,12 +100,14 @@ class BillingTest < ActionDispatch::IntegrationTest
       post billing_checkout_path, params: { plan: "pro", interval: "year" }
     end
 
+    origin = Foundation.runtime_config.canonical_origin
+
     assert_response :see_other
     assert_redirected_to "https://checkout.stripe.test/session_stub"
     assert_equal @organization, captured[:organization]
     assert_equal "price_pro_yearly", captured[:price_id]
-    assert_equal "https://example.com/billing?checkout=success", captured[:success_url]
-    assert_equal "https://example.com/pricing?interval=year", captured[:cancel_url]
+    assert_equal "#{origin}/billing?checkout=success", captured[:success_url]
+    assert_equal "#{origin}/pricing?interval=year", captured[:cancel_url]
     assert_no_match(/attacker\.invalid/, captured.values.join(" "))
   end
 
