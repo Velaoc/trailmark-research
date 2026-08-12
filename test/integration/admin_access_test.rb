@@ -46,6 +46,10 @@ class AdminAccessTest < ActionDispatch::IntegrationTest
     )
     sign_in_as(@admin)
     session_row = @admin.sessions.live.first
+    run = ResearchRun.create!(question: "Admin run", status: "completed", provider_name: "demo",
+      answer: "Done.", started_at: 1.hour.ago, completed_at: 59.minutes.ago)
+    run.steps.create!(position: 1, title: "Synthesize the answer", status: "completed",
+      output: "Done.", duration_ms: 100, started_at: 1.hour.ago, completed_at: 59.minutes.ago)
 
     [
       "/admin/dashboard",
