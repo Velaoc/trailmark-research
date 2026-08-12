@@ -158,9 +158,11 @@ class BillingTest < ActionDispatch::IntegrationTest
     with_stubbed_singleton_method(Foundation::BillingGateway, :portal_url, portal) do
       post billing_portal_path
     end
+    origin = Foundation.runtime_config.canonical_origin
+
     assert_response :see_other
     assert_redirected_to "https://billing.stripe.test/portal_stub"
     assert_equal @organization, portal_arguments[:organization]
-    assert_equal "https://example.com/billing", portal_arguments[:return_url]
+    assert_equal "#{origin}/billing", portal_arguments[:return_url]
   end
 end
