@@ -1,25 +1,22 @@
 require "test_helper"
 
 class FoundationConfigurationTest < ActiveSupport::TestCase
-  REQUIRED_KEYS = begin
-    keys = %w[
-      application_name
-      logo_url
-      brand_seed_color
-      default_page_title
-      default_page_description
-      default_og_image_url
-      social_links
-      support_email
-      legal_email
-      domain
-      healthcheck_disk_usage_percent_max
-      healthcheck_memory_usage_percent_max
-    ]
-    keys.freeze
-  end
+  REQUIRED_KEYS = %w[
+    application_name
+    logo_url
+    brand_seed_color
+    default_page_title
+    default_page_description
+    default_og_image_url
+    social_links
+    support_email
+    legal_email
+    domain
+    healthcheck_disk_usage_percent_max
+    healthcheck_memory_usage_percent_max
+  ].freeze
 
-  test "foundation config is loaded with indifferent access" do
+  test "foundation config is a HashWithIndifferentAccess" do
     foundation = Rails.configuration.x.foundation
 
     assert_kind_of ActiveSupport::HashWithIndifferentAccess, foundation
@@ -37,7 +34,7 @@ class FoundationConfigurationTest < ActiveSupport::TestCase
   test "foundation config template defaults" do
     foundation = Rails.configuration.x.foundation
 
-    assert_equal "Application", foundation[:application_name]
+    assert_equal "Trailmark Research", foundation[:application_name]
     assert_match(/\A#\h{6}\z/, foundation[:brand_seed_color])
     assert_equal 90, foundation[:healthcheck_disk_usage_percent_max]
     assert_equal 90, foundation[:healthcheck_memory_usage_percent_max]
