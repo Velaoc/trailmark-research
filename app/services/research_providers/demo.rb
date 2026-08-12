@@ -16,9 +16,9 @@ module ResearchProviders
 
     def execute(step, context)
       question = context[:question] || step.research_run&.question || ""
-      ["On #{Date.current.iso8601}, the trail reads as follows.",
-       "Assignment for step #{step.position}: #{step.title}.",
-       "Note: this is a deterministic demo result — configure RESEARCH_PROVIDER_URL/API_KEY/MODEL to run against a real model."].join("\n\n")
+      [ "On #{Date.current.iso8601}, the trail reads as follows.",
+        "Assignment for step #{step.position}: #{step.title}.",
+        "Note: this is a deterministic demo result — configure RESEARCH_PROVIDER_URL/API_KEY/MODEL to run against a real model." ].join("\n\n")
     end
   end
 end
