@@ -4,6 +4,7 @@
 # autoloaded yet when this initializer runs, so require them explicitly
 # before registering.
 require_dependency "research_providers"
+require_dependency "research_providers/base"
 require_dependency "research_providers/demo"
 require_dependency "research_providers/http"
 
