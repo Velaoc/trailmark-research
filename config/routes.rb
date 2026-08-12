@@ -34,6 +34,8 @@ Rails.application.routes.draw do
         post :revoke, on: :member
       end
       resources :events, only: %i[index show], path: "login-activity", controller: "session_events"
+      resources :research_runs, only: %i[index show]
+      resources :research_steps, only: %i[index show]
     end
 
 
