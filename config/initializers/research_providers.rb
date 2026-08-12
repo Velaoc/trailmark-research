@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+# The registry module lives under app/services and is not autoloaded yet when
+# this initializer runs, so require it explicitly before registering adapters.
+require "research_providers"
+
 # Registry for research provider adapters. RESEARCH_PROVIDER_NAME selects the
 # active one; it defaults to the demo adapter in previews so the app is fully
 # usable offline. A production deployment sets RESEARCH_PROVIDER_NAME=http and
