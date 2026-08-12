@@ -1,0 +1,46 @@
+{
+  "name": "Trailmark Research",
+  "purpose": "A user submits a research question and an agent works through it step by step; every step and its result is recorded and rendered as a live timeline, ending in a synthesized answer.",
+  "actors": [
+    "Researcher (any visitor, no account needed)",
+    "Research Agent (runs steps through a provider adapter)",
+    "Operator (sees all runs, framework admin)"
+  ],
+  "entities": [
+    {
+      "name": "ResearchRun",
+      "relationships": [
+        "has many ResearchSteps",
+        "belongs to nobody (guest-created)"
+      ]
+    },
+    {
+      "name": "ResearchStep",
+      "relationships": [
+        "belongs to ResearchRun"
+      ]
+    }
+  ],
+  "workflows": [
+    {
+      "name": "Submit a research question",
+      "description": "Visitor enters a question; a run is created with a planned step list and execution kicks off."
+    },
+    {
+      "name": "Watch the run",
+      "description": "Run page shows a timeline of steps with live status; page refreshes while the run is active."
+    },
+    {
+      "name": "Review the result",
+      "description": "Completed run shows the final answer plus every step's input, output, and timing."
+    }
+  ],
+  "modules": [],
+  "integrations": [
+    {
+      "name": "research provider (OpenAI-compatible chat API)",
+      "demo_adapter": true
+    }
+  ],
+  "seed_demo": "One completed demo run about the Vela pulsar with all steps recorded, so the timeline renders fully without any provider call."
+}
