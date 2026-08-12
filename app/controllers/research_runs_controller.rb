@@ -19,7 +19,7 @@ class ResearchRunsController < ApplicationController
       end
       @run.update!(provider_name: ResearchProviders.default_provider_name)
       ResearchRunJob.perform_later(@run)
-      redirect_to @run, notice: "Research run started."
+      redirect_to research_run_path(@run), notice: "Research run started."
     else
       render :new, status: :unprocessable_entity
     end
