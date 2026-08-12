@@ -1,0 +1,77 @@
+<% title "Research run" %>
+
+<section class="md-section" aria-labelledby="run-title">
+  <div class="md-section__inner md-section__inner--narrow">
+    <p class="md-section__eyebrow"><%= @run.status.humanize %></p>
+    <h1 id="run-title" class="md-section__heading"><%= @run.question %></h1>
+    <p class="md-run-meta">
+      Provider: <%= @run.provider_name || "demo" %>
+      &middot; <%= @steps.size %> steps
+      <% if @run.started_at %>
+        &middot; <%= @run.running? ? "started " : "finished " %><%= @run.started_at.to_fs(:short) %>
+      <% end %>
+    </p>
+
+    <% if @run.running? %>
+      <p class="md-status-banner" data-controller="refresh" data-refresh-interval-value="2000">
+        The agent is working. This page refreshes as steps complete.
+      </p>
+    <% end %>
+
+    <% if @run.completed? && @run.answer.present? %>
+      <article class="md-card md-card--filled md-answer" aria-labelledby="answer-title">
+        <h2 id="answer-title">Answer</h2>
+        <div class="md-prose"><%= simple_format(@run.answer) %></div>
+      </article>
+    <% end %>
+
+    <% if @run.failed? %>
+      <article class="md-card md-card--error" aria-labelledby="error-title">
+        <h2 id="error-title">Run failed</h2>
+        <p><%= @run.error.presence || "The run ended without a recorded error." %></p>
+      </article>
+    <% end %>
+
+    <h2 class="md-section__heading">Timeline</h2>
+    <ol class="md-timeline">
+      <% @steps.each do |step| %>
+        <li class="md-timeline__item" data-status="<%= step.status %>">
+          <div class="md-timeline__rail" aria-hidden="true">
+            <span class="md-timeline__dot"><%= step.position %></span>
+          </div>
+          <div class="md-timeline__card md-card md-card--filled">
+            <div class="md-timeline__header">
+              <h3><%= step.title %></h3>
+              <span class="md-chip"><%= step_status_label(step) %></span>
+              <% if (label = duration_label(step)) %>
+                <span class="md-timeline__duration"><%= label %></span>
+              <% end %>
+            </div>
+
+            <% if step.input.present? %>
+              <details class="md-timeline__details" <%= "open" if step.running? || step.completed? %>>
+                <summary>Assignment</summary>
+                <div class="md-prose md-timeline__code"><%= simple_format(step.input) %></div>
+              </details>
+            <% end %>
+
+            <% if step.output.present? %>
+              <details class="md-timeline__details" open>
+                <summary>Result</summary>
+                <div class="md-prose md-timeline__code"><%= simple_format(step.output) %></div>
+              </details>
+            <% end %>
+
+            <% if step.error.present? %>
+              <p class="md-timeline__error"><strong>Error:</strong> <%= step.error %></p>
+            <% end %>
+          </div>
+        </li>
+      <% end %>
+    </ol>
+
+    <div class="md-actions">
+      <%= link_to "Start another run", new_research_run_path, class: "md-button md-button--filled" %>
+    </div>
+  </div>
+</section>
