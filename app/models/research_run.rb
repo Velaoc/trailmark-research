@@ -16,6 +16,14 @@ class ResearchRun < ApplicationRecord
     status.in?(%w[queued running])
   end
 
+  def completed?
+    status == "completed"
+  end
+
+  def failed?
+    status == "failed"
+  end
+
   def elapsed_ms
     return nil unless started_at
 
