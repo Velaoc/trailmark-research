@@ -1,0 +1,41 @@
+<% identity = Rails.configuration.x.foundation %>
+<% title "New research run" %>
+
+<section class="md-hero" aria-labelledby="hero-title">
+  <div class="md-hero__inner">
+    <div>
+      <p class="md-section__eyebrow"><%= identity[:application_name] %></p>
+      <h1 id="hero-title">Ask a question. Watch the trail.</h1>
+      <p>Submit a research question and an agent works through it step by step — every step recorded and shown as a timeline, ending in a synthesized answer.</p>
+    </div>
+  </div>
+</section>
+
+<section class="md-section" aria-labelledby="new-run-title">
+  <div class="md-section__inner md-section__inner--narrow">
+    <h2 id="new-run-title" class="md-section__heading">Start a research run</h2>
+
+    <%= form_with model: @run, url: research_runs_path, class: "md-card md-card--filled md-form-stack" do |form| %>
+      <% if @run.errors.any? %>
+        <div class="md-form-error" role="alert">
+          <p><strong>Fix these before submitting:</strong></p>
+          <ul>
+            <% @run.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="md-field">
+        <%= form.label :question, "Research question" %>
+        <%= form.text_area :question, rows: 4, maxlength: 1000, required: true,
+              placeholder: "e.g. How does a pulsar's spin-down rate constrain its age?" %>
+      </div>
+
+      <div class="md-actions">
+        <%= form.submit "Start research", class: "md-button md-button--filled" %>
+      </div>
+    <% end %>
+  </div>
+</section>
