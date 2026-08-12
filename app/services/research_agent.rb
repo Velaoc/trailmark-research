@@ -55,6 +55,6 @@ class ResearchAgent
     outputs = context.select { |key, _| key.is_a?(Integer) }.sort.map { |_, value| value }
     return "No steps produced findings." if outputs.empty?
 
-    ["Research complete.", *outputs].join("\n\n")
+    [ "Research complete.", *outputs ].join("\n\n")
   end
 end
